@@ -4,11 +4,10 @@ import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Plus } from 'lucide-react'
 import { toast } from 'sonner'
 
@@ -58,13 +57,12 @@ export function NewListDialog() {
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700 gap-1.5">
-          <Plus className="w-4 h-4" />
-          {t('newList')}
-        </Button>
-      </DialogTrigger>
+    <>
+      <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700 gap-1.5" onClick={() => setOpen(true)}>
+        <Plus className="w-4 h-4" />
+        {t('newList')}
+      </Button>
+      <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="max-w-sm">
         <DialogHeader>
           <DialogTitle>{t('newList')}</DialogTitle>
@@ -116,5 +114,6 @@ export function NewListDialog() {
         </form>
       </DialogContent>
     </Dialog>
+    </>
   )
 }
