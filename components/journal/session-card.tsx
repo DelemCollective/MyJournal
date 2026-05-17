@@ -25,7 +25,7 @@ const timeIcons = {
 const timeColors = {
   morning: 'text-amber-500 bg-amber-50',
   afternoon: 'text-orange-500 bg-orange-50',
-  evening: 'text-indigo-500 bg-indigo-50',
+  evening: 'text-gray-700 bg-gray-100',
   custom: 'text-gray-500 bg-gray-50',
 }
 
@@ -76,7 +76,7 @@ export function SessionCard({ session, completedToday, locale }: SessionCardProp
           </Link>
         ) : (
           <Link href={`/${locale}/journal/${session.id}`} className="flex-1">
-            <Button size="sm" className="w-full bg-indigo-600 hover:bg-indigo-700 gap-1.5">
+            <Button size="sm" className="w-full bg-gray-900 hover:bg-gray-800 gap-1.5">
               {t('startSession')}
               <ArrowRight className="w-3.5 h-3.5" />
             </Button>

@@ -92,6 +92,7 @@
     "newSession": "New journal",
     "sessionName": "Session name",
     "timeOfDay": "Time",
+    "triggerTime": "Reminder time (optional)",
     "morning": "Morning",
     "afternoon": "Afternoon",
     "evening": "Evening",

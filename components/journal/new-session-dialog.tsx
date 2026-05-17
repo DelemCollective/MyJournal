@@ -78,7 +78,7 @@ export function NewSessionDialog() {
 
   return (
     <>
-      <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700 gap-1.5" onClick={() => setOpen(true)}>
+      <Button size="sm" className="bg-gray-900 hover:bg-gray-800 gap-1.5" onClick={() => setOpen(true)}>
         <Plus className="w-4 h-4" />
         {t('newSession')}
       </Button>
@@ -112,7 +112,7 @@ export function NewSessionDialog() {
             </Select>
           </div>
           <div className="space-y-1.5">
-            <Label>{t('triggerTime') ?? 'Herinnertijd'}</Label>
+            <Label>{t('triggerTime')}</Label>
             <Input
               type="time"
               value={triggerTime}
@@ -123,7 +123,7 @@ export function NewSessionDialog() {
             <Button type="button" variant="outline" className="flex-1" onClick={() => setOpen(false)}>
               {tCommon('cancel')}
             </Button>
-            <Button type="submit" className="flex-1 bg-indigo-600 hover:bg-indigo-700" disabled={loading}>
+            <Button type="submit" className="flex-1 bg-gray-900 hover:bg-gray-800" disabled={loading}>
               {tCommon('save')}
             </Button>
           </div>

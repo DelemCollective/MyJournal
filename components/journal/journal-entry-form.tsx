@@ -119,7 +119,7 @@ export function JournalEntryForm({ session, locale, userId }: JournalEntryFormPr
         </div>
       </div>
 
-      <Progress value={progress} className="mb-8 h-1.5 bg-gray-100 [&>div]:bg-indigo-500" />
+      <Progress value={progress} className="mb-8 h-1.5 bg-gray-100 [&>div]:bg-gray-900" />
 
       <div className="flex-1 relative overflow-hidden">
         <AnimatePresence mode="wait" custom={direction}>
@@ -134,7 +134,7 @@ export function JournalEntryForm({ session, locale, userId }: JournalEntryFormPr
           >
             {isQuestionStep && currentQuestion && (
               <div className="space-y-6">
-                <div className="bg-indigo-50 rounded-2xl p-5">
+                <div className="bg-gray-50 rounded-2xl p-5">
                   <p className="text-lg font-medium text-gray-900 leading-relaxed">
                     {locale === 'en' && currentQuestion.question_text_en
                       ? currentQuestion.question_text_en
@@ -145,7 +145,7 @@ export function JournalEntryForm({ session, locale, userId }: JournalEntryFormPr
                   value={answers[currentQuestion.id] ?? ''}
                   onChange={(e) => setAnswers(prev => ({ ...prev, [currentQuestion.id]: e.target.value }))}
                   placeholder={t('yourAnswer')}
-                  className="min-h-36 text-base resize-none border-gray-200 focus:border-indigo-400 rounded-xl"
+                  className="min-h-36 text-base resize-none border-gray-200 rounded-xl"
                   autoFocus
                 />
               </div>
@@ -153,7 +153,7 @@ export function JournalEntryForm({ session, locale, userId }: JournalEntryFormPr
 
             {isFreeTextStep && (
               <div className="space-y-6">
-                <div className="bg-purple-50 rounded-2xl p-5">
+                <div className="bg-gray-50 rounded-2xl p-5">
                   <p className="text-lg font-medium text-gray-900 leading-relaxed">
                     {t('freeText')}
                   </p>
@@ -163,7 +163,7 @@ export function JournalEntryForm({ session, locale, userId }: JournalEntryFormPr
                   value={freeText}
                   onChange={(e) => setFreeText(e.target.value)}
                   placeholder={t('freeTextPlaceholder')}
-                  className="min-h-36 text-base resize-none border-gray-200 focus:border-indigo-400 rounded-xl"
+                  className="min-h-36 text-base resize-none border-gray-200 rounded-xl"
                   autoFocus
                 />
               </div>
@@ -171,7 +171,7 @@ export function JournalEntryForm({ session, locale, userId }: JournalEntryFormPr
 
             {isMoodStep && (
               <div className="space-y-6">
-                <div className="bg-amber-50 rounded-2xl p-5">
+                <div className="bg-gray-50 rounded-2xl p-5">
                   <p className="text-lg font-medium text-gray-900">{t('mood')}</p>
                 </div>
                 <div className="flex gap-3 justify-center">
@@ -182,8 +182,8 @@ export function JournalEntryForm({ session, locale, userId }: JournalEntryFormPr
                       className={cn(
                         'flex flex-col items-center gap-1.5 p-3 rounded-2xl border-2 transition-all flex-1',
                         mood === option.value
-                          ? 'border-indigo-500 bg-indigo-50 scale-105'
-                          : 'border-gray-100 hover:border-gray-200'
+                          ? 'border-gray-900 bg-gray-100 scale-105'
+                          : 'border-gray-100 hover:border-gray-300'
                       )}
                     >
                       <span className="text-2xl">{option.emoji}</span>
@@ -209,7 +209,7 @@ export function JournalEntryForm({ session, locale, userId }: JournalEntryFormPr
           <Button
             onClick={handleSubmit}
             disabled={submitting}
-            className="bg-indigo-600 hover:bg-indigo-700 gap-1.5"
+            className="bg-gray-900 hover:bg-gray-800 gap-1.5"
           >
             <Send className="w-4 h-4" />
             {t('submitEntry')}
@@ -217,8 +217,7 @@ export function JournalEntryForm({ session, locale, userId }: JournalEntryFormPr
         ) : (
           <Button
             onClick={goNext}
-            disabled={!canNext}
-            className="bg-indigo-600 hover:bg-indigo-700 gap-1.5"
+            className="bg-gray-900 hover:bg-gray-800 gap-1.5"
           >
             {tCommon('next')}
             <ArrowRight className="w-4 h-4" />

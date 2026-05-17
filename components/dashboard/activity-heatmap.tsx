@@ -45,9 +45,9 @@ export function ActivityHeatmap({ activityDays, label }: ActivityHeatmapProps) {
                   className={cn(
                     'w-3 h-3 rounded-sm',
                     active
-                      ? 'bg-indigo-500'
+                      ? 'bg-gray-800'
                       : 'bg-gray-100',
-                    isToday && !active && 'bg-indigo-100 ring-1 ring-indigo-300'
+                    isToday && !active && 'bg-gray-200 ring-1 ring-gray-400'
                   )}
                 />
               )

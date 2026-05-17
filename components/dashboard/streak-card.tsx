@@ -49,8 +49,8 @@ export function StreakCard({
         className="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm"
       >
         <div className="flex items-center gap-2 mb-3">
-          <div className="w-8 h-8 bg-indigo-100 rounded-xl flex items-center justify-center">
-            <CalendarCheck className="w-4 h-4 text-indigo-500" />
+          <div className="w-8 h-8 bg-gray-100 rounded-xl flex items-center justify-center">
+            <CalendarCheck className="w-4 h-4 text-gray-600" />
           </div>
           <span className="text-xs font-medium text-gray-500">{labelJournal}</span>
         </div>

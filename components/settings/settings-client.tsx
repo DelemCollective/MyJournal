@@ -35,8 +35,8 @@ export function SettingsClient({ user, locale }: SettingsClientProps) {
       {/* Account */}
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
         <div className="flex items-center gap-3 p-4">
-          <div className="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center">
-            <User className="w-5 h-5 text-indigo-600" />
+          <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
+            <User className="w-5 h-5 text-gray-600" />
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-xs font-medium text-gray-400">{t('account')}</p>

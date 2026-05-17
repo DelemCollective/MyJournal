@@ -130,7 +130,7 @@ export function HabitListCard({ list, completedIds }: HabitListCardProps) {
                       disabled={checking === habit.id}
                       className={cn(
                         'rounded-full border-2',
-                        done ? 'border-indigo-500 bg-indigo-500' : 'border-gray-300'
+                        done ? 'border-gray-900 bg-gray-900' : 'border-gray-300'
                       )}
                     />
                     <span className={cn(
@@ -153,7 +153,7 @@ export function HabitListCard({ list, completedIds }: HabitListCardProps) {
                     autoFocus
                     className="h-8 text-sm"
                   />
-                  <Button size="sm" onClick={addHabit} className="bg-indigo-600 hover:bg-indigo-700 h-8">
+                  <Button size="sm" onClick={addHabit} className="bg-gray-900 hover:bg-gray-800 h-8">
                     {tCommon('add')}
                   </Button>
                   <Button size="sm" variant="ghost" onClick={() => setAddingHabit(false)} className="h-8">
@@ -163,7 +163,7 @@ export function HabitListCard({ list, completedIds }: HabitListCardProps) {
               ) : (
                 <button
                   onClick={() => setAddingHabit(true)}
-                  className="flex items-center gap-2 text-xs text-gray-400 hover:text-indigo-600 transition-colors pt-1 px-2.5"
+                  className="flex items-center gap-2 text-xs text-gray-400 hover:text-gray-900 transition-colors pt-1 px-2.5"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   {t('addHabit')}

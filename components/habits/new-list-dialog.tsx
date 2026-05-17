@@ -58,7 +58,7 @@ export function NewListDialog() {
 
   return (
     <>
-      <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700 gap-1.5" onClick={() => setOpen(true)}>
+      <Button size="sm" className="bg-gray-900 hover:bg-gray-800 gap-1.5" onClick={() => setOpen(true)}>
         <Plus className="w-4 h-4" />
         {t('newList')}
       </Button>
@@ -107,7 +107,7 @@ export function NewListDialog() {
             <Button type="button" variant="outline" className="flex-1" onClick={() => setOpen(false)}>
               {tCommon('cancel')}
             </Button>
-            <Button type="submit" className="flex-1 bg-indigo-600 hover:bg-indigo-700" disabled={loading}>
+            <Button type="submit" className="flex-1 bg-gray-900 hover:bg-gray-800" disabled={loading}>
               {tCommon('save')}
             </Button>
           </div>

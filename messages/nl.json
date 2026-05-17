@@ -92,6 +92,7 @@
     "newSession": "Nieuw dagboek",
     "sessionName": "Naam van de sessie",
     "timeOfDay": "Moment",
+    "triggerTime": "Herinnertijd (optioneel)",
     "morning": "Ochtend",
     "afternoon": "Middag",
     "evening": "Avond",

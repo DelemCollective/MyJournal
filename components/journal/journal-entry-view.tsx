@@ -49,7 +49,7 @@ export function JournalEntryView({ session, entry, locale }: JournalEntryViewPro
               transition={{ delay: i * 0.06 }}
               className="bg-white rounded-2xl border border-gray-100 p-4"
             >
-              <p className="text-xs font-medium text-indigo-600 mb-2">
+              <p className="text-xs font-medium text-gray-400 mb-2">
                 {locale === 'en' && q.question_text_en ? q.question_text_en : q.question_text_nl}
               </p>
               <p className="text-sm text-gray-700 leading-relaxed">{answer}</p>
@@ -62,9 +62,9 @@ export function JournalEntryView({ session, entry, locale }: JournalEntryViewPro
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: questions.length * 0.06 }}
-            className="bg-purple-50 rounded-2xl border border-purple-100 p-4"
+            className="bg-gray-50 rounded-2xl border border-gray-100 p-4"
           >
-            <p className="text-xs font-medium text-purple-600 mb-2">{t('freeText')}</p>
+            <p className="text-xs font-medium text-gray-400 mb-2">{t('freeText')}</p>
             <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">{entry.free_text}</p>
           </motion.div>
         )}
@@ -74,11 +74,11 @@ export function JournalEntryView({ session, entry, locale }: JournalEntryViewPro
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: (questions.length + 1) * 0.06 }}
-            className="bg-amber-50 rounded-2xl border border-amber-100 p-4 flex items-center gap-3"
+            className="bg-gray-50 rounded-2xl border border-gray-100 p-4 flex items-center gap-3"
           >
             <span className="text-3xl">{MOOD_EMOJIS[entry.mood]}</span>
             <div>
-              <p className="text-xs font-medium text-amber-600">{t('mood')}</p>
+              <p className="text-xs font-medium text-gray-400">{t('mood')}</p>
               <p className="text-sm text-gray-700">{entry.mood}/5</p>
             </div>
           </motion.div>
