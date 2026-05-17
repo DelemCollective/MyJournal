@@ -114,9 +114,17 @@ export function NewSessionDialog() {
           <div className="space-y-1.5">
             <Label>{t('triggerTime')}</Label>
             <Input
-              type="time"
+              type="text"
+              inputMode="numeric"
+              placeholder="23:54"
               value={triggerTime}
-              onChange={(e) => setTriggerTime(e.target.value)}
+              maxLength={5}
+              onChange={(e) => {
+                const digits = e.target.value.replace(/\D/g, '')
+                if (!digits) { setTriggerTime(''); return }
+                if (digits.length <= 2) setTriggerTime(digits)
+                else setTriggerTime(digits.slice(0, 2) + ':' + digits.slice(2, 4))
+              }}
             />
           </div>
           <div className="flex gap-2 pt-1">

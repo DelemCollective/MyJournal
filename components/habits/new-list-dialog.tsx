@@ -80,9 +80,17 @@ export function NewListDialog() {
           <div className="space-y-1.5">
             <Label>{t('triggerTime')}</Label>
             <Input
-              type="time"
+              type="text"
+              inputMode="numeric"
+              placeholder="23:54"
               value={time}
-              onChange={(e) => setTime(e.target.value)}
+              maxLength={5}
+              onChange={(e) => {
+                const digits = e.target.value.replace(/\D/g, '')
+                if (!digits) { setTime(''); return }
+                if (digits.length <= 2) setTime(digits)
+                else setTime(digits.slice(0, 2) + ':' + digits.slice(2, 4))
+              }}
             />
           </div>
           <div className="space-y-1.5">
