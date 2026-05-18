@@ -22,23 +22,27 @@ export function BottomNav({ locale }: NavProps) {
   ]
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-100 pb-safe md:hidden">
-      <div className="flex items-center justify-around max-w-lg mx-auto">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-t border-gray-100 pb-safe md:hidden">
+      <div className="flex items-center max-w-lg mx-auto px-2 py-1.5">
         {links.map(({ href, label, icon: Icon }) => {
           const active = pathname.startsWith(href)
           return (
-            <Link
-              key={href}
-              href={href}
-              className={cn(
-                'flex flex-col items-center gap-1 px-3 py-3 min-w-0 flex-1 transition-colors',
-                active ? 'text-gray-900' : 'text-gray-400 hover:text-gray-600'
-              )}
-            >
-              <Icon className="w-5 h-5" strokeWidth={active ? 2.5 : 2} />
-              <span className={cn('text-[10px] font-medium', active ? 'text-gray-900' : 'text-gray-400')}>
-                {label}
-              </span>
+            <Link key={href} href={href} className="flex-1 flex justify-center">
+              <div className={cn(
+                'flex flex-col items-center gap-1 px-3 py-2 rounded-2xl transition-all min-w-0',
+                active ? 'bg-gray-100' : 'hover:bg-gray-50'
+              )}>
+                <Icon
+                  className={cn('w-6 h-6 flex-shrink-0', active ? 'text-gray-900' : 'text-gray-400')}
+                  strokeWidth={active ? 2.5 : 1.8}
+                />
+                <span className={cn(
+                  'text-[10px] font-semibold leading-none',
+                  active ? 'text-gray-900' : 'text-gray-400'
+                )}>
+                  {label}
+                </span>
+              </div>
             </Link>
           )
         })}

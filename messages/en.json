@@ -24,6 +24,7 @@
   "auth": {
     "login": "Sign in",
     "register": "Get started",
+    "name": "First name",
     "email": "Email address",
     "password": "Password",
     "confirmPassword": "Confirm password",

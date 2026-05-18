@@ -5,38 +5,47 @@ import { StreakCard } from '@/components/dashboard/streak-card'
 import { ActivityHeatmap } from '@/components/dashboard/activity-heatmap'
 import { DashboardHero } from '@/components/dashboard/dashboard-hero'
 import { BadgesSection } from '@/components/dashboard/badges-section'
+import { DailyEgg } from '@/components/dashboard/daily-egg'
 
 async function getDashboardData(userId: string) {
   const supabase = await createClient()
   const today = format(new Date(), 'yyyy-MM-dd')
   const since = format(subDays(new Date(), 365), 'yyyy-MM-dd')
 
-  const [habitsRes, completionsRes, listsRes, journalRes, journalEntriesRes] = await Promise.all([
+  const [habitsRes, completionsRes, journalRes, journalEntriesRes] = await Promise.all([
     supabase.from('habits').select('id').eq('user_id', userId),
     supabase.from('habit_completions').select('completed_date, habit_id').eq('user_id', userId).gte('completed_date', since),
-    supabase.from('habit_lists').select('id').eq('user_id', userId),
-    supabase.from('journal_sessions').select('id').eq('user_id', userId).eq('is_active', true),
-    supabase.from('journal_entries').select('entry_date').eq('user_id', userId).gte('entry_date', since),
+    supabase.from('journal_sessions').select('id, trigger_time').eq('user_id', userId).eq('is_active', true),
+    supabase.from('journal_entries').select('entry_date, session_id').eq('user_id', userId).gte('entry_date', since),
   ])
 
   const habits = habitsRes.data ?? []
   const completions = completionsRes.data ?? []
+  const sessions = journalRes.data ?? []
   const journalEntries = journalEntriesRes.data ?? []
 
-  // Today's completions
   const todayCompletions = completions.filter(c => c.completed_date === today)
   const todayHabitsCompleted = todayCompletions.length
   const todayHabitsTotal = habits.length
 
-  // Check today's journal
-  const todayJournalCompleted = journalEntries.some(e => e.entry_date === today)
+  const todayEntrySessionIds = new Set(
+    journalEntries.filter(e => e.entry_date === today).map(e => e.session_id)
+  )
+  const todayJournalCompleted = todayEntrySessionIds.size > 0
 
-  // Build activity set (days with either habit or journal activity)
+  // Time-based journal prompt: only show after session trigger_time
+  const now = new Date()
+  const currentTimeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`
+  const showJournalPrompt = sessions.length > 0 && sessions.some(session => {
+    if (todayEntrySessionIds.has(session.id)) return false
+    if (!session.trigger_time) return true
+    return session.trigger_time.slice(0, 5) <= currentTimeStr
+  })
+
   const habitDays = new Set(completions.map(c => c.completed_date))
   const journalDays = new Set(journalEntries.map(e => e.entry_date))
   const allActivityDays = [...new Set([...habitDays, ...journalDays])]
 
-  // Calculate habit streak
   function calcStreak(daysSet: Set<string>): number {
     let streak = 0
     let d = new Date()
@@ -55,40 +64,26 @@ async function getDashboardData(userId: string) {
     let prev: string | null = null
     for (const d of sorted) {
       if (prev) {
-        const prevDate = new Date(prev)
-        const curDate = new Date(d)
-        const diff = (curDate.getTime() - prevDate.getTime()) / 86400000
-        if (diff === 1) {
-          current++
-        } else {
-          longest = Math.max(longest, current)
-          current = 1
-        }
+        const diff = (new Date(d).getTime() - new Date(prev).getTime()) / 86400000
+        current = diff === 1 ? current + 1 : 1
       } else {
         current = 1
       }
+      longest = Math.max(longest, current)
       prev = d
     }
-    return Math.max(longest, current)
+    return longest
   }
 
-  const habitStreak = calcStreak(habitDays)
-  const journalStreak = calcStreak(journalDays)
-  const longestHabitStreak = calcLongestStreak(habitDays)
-  const longestJournalStreak = calcLongestStreak(journalDays)
-  const totalHabitDays = habitDays.size
-  const totalJournalDays = journalDays.size
-
   return {
-    habitStreak,
-    journalStreak,
-    longestHabitStreak,
-    longestJournalStreak,
-    totalHabitDays,
-    totalJournalDays,
+    habitStreak: calcStreak(habitDays),
+    journalStreak: calcStreak(journalDays),
+    longestHabitStreak: calcLongestStreak(habitDays),
+    longestJournalStreak: calcLongestStreak(journalDays),
     todayHabitsTotal,
     todayHabitsCompleted,
     todayJournalCompleted,
+    showJournalPrompt,
     activityDays: allActivityDays,
   }
 }
@@ -103,22 +98,35 @@ export default async function DashboardPage({
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
-  const stats = await getDashboardData(user!.id)
+  const [stats, profileRes] = await Promise.all([
+    getDashboardData(user!.id),
+    supabase.from('profiles').select('display_name').eq('id', user!.id).single(),
+  ])
+
+  const displayName = profileRes.data?.display_name ?? user!.email!.split('@')[0]
 
   const hour = new Date().getHours()
   const greeting = hour < 12 ? t('greeting_morning') : hour < 18 ? t('greeting_afternoon') : t('greeting_evening')
 
   return (
-    <div className="max-w-lg mx-auto px-4 py-6 space-y-5">
+    <div className="max-w-lg mx-auto px-4 py-6 space-y-4">
       <DashboardHero
         greeting={greeting}
-        email={user!.email ?? ''}
+        displayName={displayName}
         habitsCompleted={stats.todayHabitsCompleted}
         habitsTotal={stats.todayHabitsTotal}
-        journalCompleted={stats.todayJournalCompleted}
+        showJournalPrompt={stats.showJournalPrompt}
         labelCompleted={t('habitsCompleted')}
         labelAllDone={t('allDone')}
         locale={locale}
+      />
+
+      <DailyEgg
+        completedHabits={stats.todayHabitsCompleted}
+        totalHabits={stats.todayHabitsTotal}
+        journalCompleted={stats.todayJournalCompleted}
+        labelHabits={t('habitsCompleted')}
+        labelJournal={t('journalStreak')}
       />
 
       <StreakCard

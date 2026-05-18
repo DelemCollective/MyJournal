@@ -24,6 +24,7 @@
   "auth": {
     "login": "Inloggen",
     "register": "Registreren",
+    "name": "Voornaam",
     "email": "E-mailadres",
     "password": "Wachtwoord",
     "confirmPassword": "Wachtwoord bevestigen",

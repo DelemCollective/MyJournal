@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(git commit -m ' *)",
-      "Bash(~/bin/gh auth *)"
+      "Bash(~/bin/gh auth *)",
+      "Bash(npm run *)"
     ]
   }
 }

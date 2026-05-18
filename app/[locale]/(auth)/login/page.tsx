@@ -39,7 +39,7 @@ export default function LoginPage() {
   return (
     <div className="space-y-8">
       <div className="text-center">
-        <div className="inline-flex items-center justify-center w-14 h-14 bg-indigo-600 rounded-2xl mb-4">
+        <div className="inline-flex items-center justify-center w-14 h-14 bg-gray-900 rounded-2xl mb-4">
           <BookOpen className="w-7 h-7 text-white" />
         </div>
         <h1 className="text-2xl font-bold text-gray-900">{t('loginTitle')}</h1>
@@ -71,14 +71,14 @@ export default function LoginPage() {
             className="h-11"
           />
         </div>
-        <Button type="submit" className="w-full h-11 bg-indigo-600 hover:bg-indigo-700" disabled={loading}>
+        <Button type="submit" className="w-full h-11 bg-gray-900 hover:bg-gray-800" disabled={loading}>
           {loading ? '...' : t('login')}
         </Button>
       </form>
 
       <p className="text-center text-sm text-gray-500">
         {t('noAccount')}{' '}
-        <Link href={`/${locale}/register`} className="font-medium text-indigo-600 hover:text-indigo-700">
+        <Link href={`/${locale}/register`} className="font-medium text-gray-900 underline underline-offset-4">
           {t('register')}
         </Link>
       </p>

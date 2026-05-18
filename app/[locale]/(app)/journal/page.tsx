@@ -3,7 +3,9 @@ import { getTranslations } from 'next-intl/server'
 import { format } from 'date-fns'
 import { NewSessionDialog } from '@/components/journal/new-session-dialog'
 import { SessionCard } from '@/components/journal/session-card'
-import { BookOpen } from 'lucide-react'
+import { BookOpen, History } from 'lucide-react'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 
 export default async function JournalPage({
   params,
@@ -41,13 +43,21 @@ export default async function JournalPage({
     <div className="max-w-lg mx-auto px-4 py-6">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-xl font-bold text-gray-900">{t('title')}</h1>
-        <NewSessionDialog />
+        <div className="flex items-center gap-2">
+          <Link href={`/${locale}/journal/history`}>
+            <Button variant="ghost" size="sm" className="gap-1.5 text-gray-500">
+              <History className="w-4 h-4" />
+              Geschiedenis
+            </Button>
+          </Link>
+          <NewSessionDialog />
+        </div>
       </div>
 
       {(!sessions || sessions.length === 0) ? (
         <div className="flex flex-col items-center justify-center py-20 text-center">
-          <div className="w-16 h-16 bg-indigo-50 rounded-2xl flex items-center justify-center mb-4">
-            <BookOpen className="w-8 h-8 text-indigo-300" />
+          <div className="w-16 h-16 bg-gray-50 rounded-2xl flex items-center justify-center mb-4">
+            <BookOpen className="w-8 h-8 text-gray-300" />
           </div>
           <p className="font-semibold text-gray-700 mb-1">{t('noSessions')}</p>
           <p className="text-sm text-gray-400">{t('noSessionsDesc')}</p>

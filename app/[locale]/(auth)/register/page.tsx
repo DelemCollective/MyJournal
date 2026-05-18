@@ -15,6 +15,7 @@ export default function RegisterPage() {
   const t = useTranslations('auth')
   const { locale } = useParams<{ locale: string }>()
   const router = useRouter()
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
@@ -29,6 +30,7 @@ export default function RegisterPage() {
       password,
       options: {
         emailRedirectTo: `${window.location.origin}/api/auth/callback`,
+        data: { display_name: name.trim() },
       },
     })
 
@@ -45,7 +47,7 @@ export default function RegisterPage() {
   return (
     <div className="space-y-8">
       <div className="text-center">
-        <div className="inline-flex items-center justify-center w-14 h-14 bg-indigo-600 rounded-2xl mb-4">
+        <div className="inline-flex items-center justify-center w-14 h-14 bg-gray-900 rounded-2xl mb-4">
           <BookOpen className="w-7 h-7 text-white" />
         </div>
         <h1 className="text-2xl font-bold text-gray-900">{t('registerTitle')}</h1>
@@ -53,6 +55,19 @@ export default function RegisterPage() {
       </div>
 
       <form onSubmit={handleRegister} className="space-y-4">
+        <div className="space-y-1.5">
+          <Label htmlFor="name">{t('name')}</Label>
+          <Input
+            id="name"
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Ilias"
+            required
+            autoComplete="given-name"
+            className="h-11"
+          />
+        </div>
         <div className="space-y-1.5">
           <Label htmlFor="email">{t('email')}</Label>
           <Input
@@ -78,14 +93,14 @@ export default function RegisterPage() {
             className="h-11"
           />
         </div>
-        <Button type="submit" className="w-full h-11 bg-indigo-600 hover:bg-indigo-700" disabled={loading}>
+        <Button type="submit" className="w-full h-11 bg-gray-900 hover:bg-gray-800" disabled={loading}>
           {loading ? '...' : t('register')}
         </Button>
       </form>
 
       <p className="text-center text-sm text-gray-500">
         {t('hasAccount')}{' '}
-        <Link href={`/${locale}/login`} className="font-medium text-indigo-600 hover:text-indigo-700">
+        <Link href={`/${locale}/login`} className="font-medium text-gray-900 underline underline-offset-4">
           {t('login')}
         </Link>
       </p>
